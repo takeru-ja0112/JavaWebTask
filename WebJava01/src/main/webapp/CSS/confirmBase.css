@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.taskConfirmBox{
+	width: 80%;
+	border-bottom: solid rgb(167, 167, 167) 1px;
+	padding: 10px;
+	margin: 0px auto 20px;
+	text-align: left;
+}
+
+.taskConfirmBox p{
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+
+}

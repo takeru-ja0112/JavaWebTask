@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+.list {
+	border-bottom: solid rgb(178, 178, 178) 1px;
+	margin: 20px 0;
+}

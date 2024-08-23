@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(243, 243, 243);
+}
+
+header{
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+}
+
+.title{
+	margin: auto 0 ;
+}
+
+.contentBox{
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+}
