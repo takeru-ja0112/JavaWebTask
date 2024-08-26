@@ -22,6 +22,7 @@ public class taskDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Task task = new Task(
+						rs.getInt("task_id"),
 						rs.getString("username"),
 						rs.getString("taskname"),
 						rs.getString("status"),

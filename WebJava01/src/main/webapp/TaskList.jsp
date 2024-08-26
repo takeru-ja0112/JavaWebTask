@@ -13,44 +13,52 @@
 		<button>
 			<img src="images/writeIcon.svg" alt=""><a href="newTask.jsp">新しく作成</a>
 		</button>
-		<form action="deleteTask" method="action">
-			<div id="deleteButton">
-				<img src="images/trashIcon.svg" alt=""> <input type="submit"
-					value="タスクを削除" class="deleteText">
-			</div>
-		</form>
 	</div>
 
-	<table border="1">
-		<tr>
-			<th>タスク名</th>
-			<th>ステータス</th>
-		</tr>
-		<%
-		List<Task> tasks = (List<Task>) session.getAttribute("tasks");
-		if (tasks == null) {
-			tasks = new ArrayList<>();
-		}
-		for (Task task : tasks) {
-		%>
-		<tr>
-			<td><%=task.getTaskName()%> <br> <br> 作成日時：<%=task.FormattedDate()%></td>
-			<td class="status"><%=task.getStatus()%></td>
-		</tr>
-		<%
-		}
-		%>
-	</table>
+	<div class="taskBase">
+		<div class="taskTitle">
+			<div class="taskMenu">
+				<h3>タスク一覧</h3>
+			</div>
+		</div>
+		<div>
+			<ul>
+				<%
+				List<Task> tasks = (List<Task>) session.getAttribute("tasks");
+				if (tasks == null) {
+					tasks = new ArrayList<>();
+				}
+				for (Task task : tasks) {
+				%>
+				<li class="taskName">
+					<div class="taskValue">
+						<p><%=task.getTaskName()%></p>
+						<br>
+						<div class="created">
+							<p>
+								作成日時：<%=task.FormattedDate()%></p>
+						</div>
+					</div> <input type="hidden" id="taskValue" name="taskValue">
+					<div class="status">
+						<p><%=task.getStatus()%></p>
+					</div> <details>
+						<summary> …</summary>
+						<form action="delete" method="POST">
+							<input type="hidden" name="id" value=<%=task.getTaskId()%>>
+							<input type="submit" value="削除">
+						</form>
+						<form action="edit" method="POST">
+							<input type="hidden" name="id" value=<%=task.getTaskId()%>>
+							<input type="submit" value="編集">
+						</form>
+					</details>
+				</li>
+				<%
+				}
+				%>
+			</ul>
+		</div>
+	</div>
 
-	<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const cells = document.querySelectorAll('td');
-        cells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                cell.classList.toggle('highlighted');
-            });
-        });
-    });
-	</script>
 </body>
 </html>

@@ -1,12 +1,14 @@
 package DAO;
 
 public class Task {
+	private int taskId;
 	private String userName;
 	private String taskName;
 	private String status;
 	private String created_at;
 	
-	public Task(String userName, String taskName, String status,String created_at ) {
+	public Task(int taskId, String userName, String taskName, String status,String created_at ) {
+		this.taskId = taskId;
 		this.userName = userName;
 		this.taskName = taskName;
 		this.status = status;
@@ -42,6 +44,16 @@ public class Task {
 
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
+	}
+
+
+	public int getTaskId() {
+		return taskId;
+	}
+
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
 	}
 	
 }
