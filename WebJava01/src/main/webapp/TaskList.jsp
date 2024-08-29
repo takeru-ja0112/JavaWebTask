@@ -41,16 +41,19 @@
 					</div> <input type="hidden" id="taskValue" name="taskValue">
 					<div class="status">
 						<p><%=task.getStatus()%></p>
-					</div> <details>
+					</div> <details id="taskDetails">
 						<summary> …</summary>
-						<form action="delete" method="POST">
-							<input type="hidden" name="id" value=<%=task.getTaskId()%>>
-							<input type="submit" value="削除">
-						</form>
-						<form action="edit" method="POST">
-							<input type="hidden" name="id" value=<%=task.getTaskId()%>>
-							<input type="submit" value="編集">
-						</form>
+						<div class="detailsMenu">
+							<form action="editTask" method="POST">
+								<input type="hidden" name="id" value=<%=task.getTaskId()%>>
+								<input type="submit" value="編集">
+							</form>
+							<form action="deleteTask" method="POST">
+								<input type="hidden" name="id" value=<%=task.getTaskId()%>>
+								<input type="submit" value="削除" class="deleteTaskButton"
+									onclick="return confirmDeletion()">
+							</form>
+						</div>
 					</details>
 				</li>
 				<%
@@ -59,6 +62,30 @@
 			</ul>
 		</div>
 	</div>
+	<script>
+		function confirmDeletion(){
+				return confirm("本当に削除しますか？");
+			}
 
+		
+		const detailsElements = document.querySelectorAll('details');
+
+		document.addEventListener('click' , function(event){
+			detailsElements.forEach(details => {
+			if(!details.contains(event.target)){
+				details.removeAttribute('open');
+			}
+		});
+	});
+
+	detailsElements.forEach(details => {
+			details.addEventListener('click' , function(event){
+				event.stopPropagation();
+			});
+				
+		
+		});
+		
+	</script>
 </body>
 </html>

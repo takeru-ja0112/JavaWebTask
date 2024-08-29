@@ -19,7 +19,8 @@
 			<div class="title">
 				<h1>Javaタスク管理</h1>
 			</div>
-			<div>
+			<div class="headerBox">
+				<p><%= (String)session.getAttribute("userId") %></p>
 				<form action="logout" method="post">
 					<input type="submit" value="ログアウト" id="loginButton" class="logout">
 				</form>

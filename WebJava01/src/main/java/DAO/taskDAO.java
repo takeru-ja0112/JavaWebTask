@@ -35,6 +35,8 @@ public class taskDAO {
 
 	}
 	
+	
+//	タスク登録
 	public void registTask(String sessionName,String taskVlue) {
 		String sql = "INSERT INTO task (username , taskname) VALUES (?,?) ";
 		try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -49,5 +51,48 @@ public class taskDAO {
 		
 	}
 	
+//	タスク削除
+	public void deleteTask(int taskId) {
+		String sql = "DELETE FROM task WHERE task_id = ?";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setInt(1, taskId);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件の削除が完了しました");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
+//	タスク取得
+	public String getTaskValues(int taskId) {
+		String taskValue = null;
+		String sql = "SELECT taskname FROM task WHERE task_id = ?";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setInt(1, taskId);
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			taskValue = rs.getString("taskname");
+			return taskValue;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return taskValue;
+	}
+	
+//	タスクの更新
+	public void editTask(String inputTaskValue , int taskId) {
+		String sql = "UPDATE task SET taskname = ? WHERE task_id = ?";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, inputTaskValue);
+			ps.setInt(2, taskId);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件の更新が完了しました");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

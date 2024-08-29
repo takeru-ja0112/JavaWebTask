@@ -90,3 +90,38 @@ button a{
     color: #fff;
     margin-left: 7px;
 }
+details{
+	position: relative;
+}
+summary{
+	list-style: none;
+	outline: none;
+	padding: 0 5px;
+	border-radius: 1rem;
+}
+summary:hover{
+	background-color: rgb(235, 235, 235);
+	transition: 0.5s;
+}
+.detailsMenu{
+	background-color: #ffff;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	margin-left: 5px;
+	padding: 5px;
+	border-radius: 5px;
+	filter: drop-shadow(rgb(209, 209, 209) 5px 5px 5px);
+}
+.detailsMenu input{
+	background-color: #ffff;
+}
+.detailsMenu input:hover{
+	background-color: rgb(230, 230, 230) ;
+	transition: 0.3s;
+}
+.detailsMenu .deleteTaskButton:hover{
+	background-color: rgb(255, 0, 0);
+	color: white;
+	transition: 0s;
+}
