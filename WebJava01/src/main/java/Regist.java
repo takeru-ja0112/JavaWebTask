@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,14 +29,18 @@ public class Regist extends HttpServlet {
 		PassHash hash = new PassHash();
 		dao.connect();
 		HttpSession session = request.getSession();
+		
+		UUID uuid = UUID.randomUUID();
+		
+		String vali =uuid.toString();
+		
 		String userId = (String)session.getAttribute("userId");
 		String password = (String)session.getAttribute("password");
 		String hashPassword = hash.hashPassword(password);
 		
-		
 		String userEmail = (String)session.getAttribute("userEmail");
-		dao.regist(userId, hashPassword, userEmail);
-		System.out.println("登録が完了しました。");
+//		dao.regist(userId, hashPassword, userEmail);
+//		System.out.println("登録が完了しました。");
 		
 		dao.disconnect();
 		

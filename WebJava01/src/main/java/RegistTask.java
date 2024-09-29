@@ -33,6 +33,7 @@ public class RegistTask extends HttpServlet {
 			dao.registTask(sessionName, sessionTask);
 			
 			session.removeAttribute("taskValue");
+			session.setAttribute("successMsg", "タスクを追加しました");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("UserTask");
 			dispatcher.forward(request, response);
 		}catch(Exception e) {

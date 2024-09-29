@@ -125,3 +125,73 @@ summary:hover{
 	color: white;
 	transition: 0s;
 }
+.pageBox{
+	width: 60%;
+	margin:10px auto;
+	padding: 10px;
+	background-color: #ffffff;
+}
+.pageBox ul{
+	display: flex;
+	text-align: center;
+	width: fit-content;
+	margin:0 auto;
+}
+.pageBox li{
+	margin: 0 5px;
+	list-style: none;
+	border-radius: 1rem;
+}
+
+
+.pageBox a{
+	padding: 10px 10px;
+	text-decoration: none;
+	font-size: 1rem;
+}
+.pageBox a:hover{
+	background-color: #e7e7e7;
+
+}
+.pageBox .active{
+	background-color: #e7e7e7;
+}
+
+
+.msgBox{
+	width:fit-content;
+	padding:8px 12px;
+	background-color:#b7ffa3;
+	position:absolute;
+	top:65px;
+	left:50%;
+	transform:translateX(-50%);
+	color:#fff;
+	background-color:#42c91d;
+	border-radius:1rem;
+	border:solid 3px #fff;
+	animation: fadeout 1s ease-out 5s forwards ;
+}
+
+@keyframes fadeout{
+	from{
+		opacity: 1;
+	}
+	to{
+		opacity: 0;
+	}
+}
+.statusBox{
+	display: flex;
+}
+
+.statusBox button{
+	width: fit-content;
+	margin-left:5px;
+	min-width: fit-content;
+	color: #ffffff;
+	opacity: 0.6;
+}
+.statusBox button.active{
+	opacity: 1;
+}

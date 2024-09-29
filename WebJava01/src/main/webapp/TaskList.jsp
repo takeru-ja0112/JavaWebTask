@@ -9,10 +9,31 @@
 <link rel="stylesheet" href="CSS/TaskList.css">
 </head>
 <body>
+	<%
+	if (session.getAttribute("successMsg") != null) {
+	%>
+	<div class="msgBox">
+		<p><%=session.getAttribute("successMsg")%></p>
+	</div>
+	<%
+	session.removeAttribute("successMsg");
+	}
+	%>
 	<div class="button-container">
 		<button>
 			<img src="images/writeIcon.svg" alt=""><a href="newTask.jsp">新しく作成</a>
 		</button>
+		<div class="statusBox tab" id="statusBox">
+			<button class="tab" id="allButton"  onclick="window.location.href='UserTask?status=すべて'">
+				すべて
+			</button>
+			<button class="tab" id="unFinButton"  onclick="window.location.href='UserTask?status=未完了'">
+				未完了
+			</button>
+			<button class="tab" id="finButton"  onclick="window.location.href='UserTask?status=完了'">
+				完了
+			</button>
+		</div>
 	</div>
 
 	<div class="taskBase">
@@ -44,6 +65,10 @@
 					</div> <details id="taskDetails">
 						<summary> …</summary>
 						<div class="detailsMenu">
+							<form action="okTask" method="GET">
+								<input type="hidden" name="id" value=<%=task.getTaskId()%>>
+								<input type="submit" value="完了" onclick="return confirmOK()">
+							</form>
 							<form action="editTask" method="POST">
 								<input type="hidden" name="id" value=<%=task.getTaskId()%>>
 								<input type="submit" value="編集">
@@ -62,30 +87,33 @@
 			</ul>
 		</div>
 	</div>
-	<script>
-		function confirmDeletion(){
-				return confirm("本当に削除しますか？");
-			}
+	<div class="pageBox">
+		<%
+		int totalRecords = (Integer) session.getAttribute("totalRecords");
+		int recordsPerPage = (Integer) session.getAttribute("recordsPerPage");
+		int currentPage = (Integer) session.getAttribute("currentPage");
 
-		
-		const detailsElements = document.querySelectorAll('details');
+		int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+		%>
+		<nav>
+			<ul>
+				<%
+				for (int i = 1; i <= totalPages; i++) {
+					if (currentPage == i) {
+				%>
+				<li><a href="UserTask?page=<%=i%>" class="activePage active"><%=i%></a></li>
 
-		document.addEventListener('click' , function(event){
-			detailsElements.forEach(details => {
-			if(!details.contains(event.target)){
-				details.removeAttribute('open');
-			}
-		});
-	});
-
-	detailsElements.forEach(details => {
-			details.addEventListener('click' , function(event){
-				event.stopPropagation();
-			});
-				
-		
-		});
-		
-	</script>
+				<%
+				} else {
+				%>
+				<li><a href="UserTask?page=<%=i%>" class="activePage"><%=i%></a></li>
+				<%
+				}
+				}
+				%>
+			</ul>
+		</nav>
+	</div>
+	<script src="JS/taskList.js"></script>
 </body>
 </html>

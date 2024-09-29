@@ -39,13 +39,16 @@ public class Confirmation extends HttpServlet {
 		
 		dao.connect();
 		boolean checkFlag = dao.userCheck(userId);
+		boolean checkFlagEmail = dao.EmailCheck(sanitizeUserEmail);
 		
-		if(password.length() >= 8 && checkFlag == false ) {
+		if(password.length() >= 8 && checkFlag == false && sanitizeUserId.length() <= 20 && checkFlagEmail == false) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", sanitizeUserId);
 			session.setAttribute("userEmail", sanitizeUserEmail);
 			session.setAttribute("password", sanitizePassword);
 			session.setMaxInactiveInterval(300);
+			
+			System.out.println(sanitizeUserId.length());
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/confirm.jsp");
 			dispatcher.forward(request, response);
@@ -55,7 +58,17 @@ public class Confirmation extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/newUser.jsp");
 			dispatcher.forward(request, response);
 		}else if(checkFlag == true){
-			String errorMessage = "その名前はすでに登録されています";
+			String errorMessage = "入力された名前はすでに登録されています";
+			request.setAttribute("errorMessage", errorMessage);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/newUser.jsp");
+			dispatcher.forward(request, response);
+		}else if(sanitizeUserId.length() > 20) {
+			String errorMessage = "ユーザIDは20字以下にしてください";
+			request.setAttribute("errorMessage", errorMessage);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/newUser.jsp");
+			dispatcher.forward(request, response);
+		}else if(checkFlagEmail == true) {
+			String errorMessage = "入力されたメールアドレスはすでに登録されています";
 			request.setAttribute("errorMessage", errorMessage);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/newUser.jsp");
 			dispatcher.forward(request, response);

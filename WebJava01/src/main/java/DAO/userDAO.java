@@ -121,4 +121,24 @@ public class userDAO {
 		}
 		return false;
 	}
+	
+	public boolean EmailCheck(String Email) {
+		String sql = "SELECT COUNT(*) FROM users WHERE email  = ?";
+		
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, Email);
+			try(ResultSet rs = ps.executeQuery()){
+				if(rs.next()) {
+					int count = rs.getInt(1);
+					return count > 0;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

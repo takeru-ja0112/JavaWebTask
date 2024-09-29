@@ -28,7 +28,14 @@ public class ConfirmTask extends HttpServlet {
 		String taskName = request.getParameter("taskName");
 		XSSservlet XssInput = new XSSservlet(taskName);
 		String sanitizeValue = XssInput.getSanitizeValue();
+		int maxValue = 100;
 		
+		if(sanitizeValue.length() >  maxValue) {
+			request.setAttribute("errorValue", "文字数は100文字以内にしてください");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("newTask.jsp");
+			session.setAttribute("taskValue", sanitizeValue);
+			dispatcher.forward(request, response);
+		}
 		
 		session.setAttribute("taskValue", sanitizeValue);
 		

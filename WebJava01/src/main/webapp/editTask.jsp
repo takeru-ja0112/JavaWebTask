@@ -13,16 +13,23 @@
 	<div class="flex-container">
 		<div class="margin">
 			<div class="taskForm">
-				<h1>新しいタスクの登録</h1>
-				<p>文字量：<span id="textCount">0</span></p>
-				<%if(request.getAttribute("errorValue") != null){ %>
-					<p style="color:red"><%= request.getAttribute("errorValue") %></p>
-				<%} %>
-				<form action="confirmTask" method="POST">
-					<textarea class="taskBox" id="taskName" name="taskName"><% if(session.getAttribute("taskValue") != null)
-					{ %><%= session.getAttribute("taskValue") %><%
-					}
-					%></textarea><br><br>
+				<h1>タスクの編集</h1>
+				<p>
+					文字量：<span id="textCount">0</span>
+				</p>
+				<%
+				if (request.getAttribute("errorValue") != null) {
+				%>
+				<p style="color: red"><%=request.getAttribute("errorValue")%></p>
+				<%
+				}
+				%>
+				<form action="confirmEditTask" method="POST">
+					<textarea class="taskBox" id="taskName" name="taskNameEdit"><%
+						if (session.getAttribute("taskValueEdit") != null) {
+						%><%=session.getAttribute("taskValueEdit")%><%
+						}%></textarea><br>
+					<br>
 					<div class="display-flexBox">
 						<div class="backButton">
 							<a href="welcome.jsp">一覧に戻る</a>
@@ -37,9 +44,9 @@
 		const textArea = document.getElementById('taskName');
 		const textCount = document.getElementById('textCount');
 
-		textArea.addEventListener('input' , function(){
-				textCount.textContent = textArea.value.length;
-			});
+		textArea.addEventListener('input', function() {
+			textCount.textContent = textArea.value.length;
+		});
 	</script>
 </body>
 </html>
