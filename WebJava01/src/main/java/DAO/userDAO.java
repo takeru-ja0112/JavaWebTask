@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.UUID;
 
 import security.PassHash;
 
@@ -101,6 +102,72 @@ public class userDAO {
 		}
 	}
 	
+//	仮登録用ユーザ登録処理
+	public void regist_tmp(String uuid, String userId,String userPassword, String email) {
+		String sql = "INSERT INTO users_tmp (uuid, name , password,email) VALUES(?::uuid,?,?,?)";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, uuid);
+			ps.setString(2, userId);
+			ps.setString(3, userPassword);
+			ps.setString(4, email);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件の更新が完了しました。");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	UUIDからのデータベースへの登録
+	public void uuidRegist(String inputuuid) {
+		String sql = "INSERT INTO users (name , password , email) SELECT name , password , email FROM users_tmp WHERE uuid = ?";
+		
+		UUID uuid = UUID.fromString(inputuuid);
+		
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setObject(1, uuid);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件のテーブルへの登録が完了しました。");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	仮DBのメールアドレス修正
+	public void changeEmail(String inputuuid, String newEmail) {
+		String sql = "UPDATE users_tmp SET email = ? WHERE uuid = ?";
+		
+		UUID uuid = UUID.fromString(inputuuid);
+		
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, newEmail);
+			ps.setObject(2, uuid);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件のメールアドレスの更新が完了しました。");
+		}catch(Exception e ) {
+			e.printStackTrace();
+		}
+	}
+	
+//	UUIDから対応する行の削除
+	public void uuidDelete(String inputuuid) {
+		String sql = "DELETE FROM users_tmp WHERE uuid = ?";
+		
+		UUID uuid = UUID.fromString(inputuuid);
+		
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setObject(1, uuid);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件の削除が完了しました\n\n" + uuid);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 //	名前が重複していないか
 	public boolean userCheck(String userId) {
 		String sql = "SELECT COUNT(*) FROM users WHERE name = ?";
@@ -140,5 +207,37 @@ public class userDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+//	メールアドレスからIDの取得
+	public int EmailIdCheck(String Email) {
+		int id = 0;
+		String sql = "SELECT id FROM users WHERE email = ?";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, Email);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				id = rs.getInt(1);
+				return id;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+//	IDが一致するアカウントのパスワードの変更
+	public void ChengePassword(int id , String pass) {
+		String sql = "UPDATE users SET password = ? WHERE id = ?";
+		try(PreparedStatement ps = con.prepareStatement(sql)){
+			ps.setString(1, pass);
+			ps.setInt(2,id);
+			
+			int count = ps.executeUpdate();
+			System.out.println(count + "件の更新が完了しました");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

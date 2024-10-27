@@ -15,5 +15,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/pleiades/postgresql-42.7.3.jar"/>
 	<classpathentry kind="lib" path="C:/pleiades/tomcat/9/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/pleiades/activation-1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

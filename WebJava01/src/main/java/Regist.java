@@ -33,18 +33,19 @@ public class Regist extends HttpServlet {
 		UUID uuid = UUID.randomUUID();
 		
 		String vali =uuid.toString();
+		session.setAttribute("uuid", vali);
 		
 		String userId = (String)session.getAttribute("userId");
 		String password = (String)session.getAttribute("password");
 		String hashPassword = hash.hashPassword(password);
 		
 		String userEmail = (String)session.getAttribute("userEmail");
-//		dao.regist(userId, hashPassword, userEmail);
+		dao.regist_tmp(vali, userId, hashPassword, userEmail);
 //		System.out.println("登録が完了しました。");
 		
 		dao.disconnect();
 		
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("mailConfirm.jsp");
 	}
 
 }

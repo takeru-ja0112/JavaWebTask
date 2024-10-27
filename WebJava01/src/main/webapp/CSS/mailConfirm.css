@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+#mailaddressBox{
+	width: 100%;
+	margin:20px 0;
+	padding: 5px 10px;
+}

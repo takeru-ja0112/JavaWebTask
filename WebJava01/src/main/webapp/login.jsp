@@ -35,7 +35,7 @@
 				<a href="newUser.jsp">ユーザを新規作成</a>
 			</div>
 			<div class="official">
-				<a href="#">パスワードを忘れた方</a>
+				<a href="PasswordEmail.jsp">パスワードを忘れた方</a>
 			</div>
 		</div>
 	</div>
